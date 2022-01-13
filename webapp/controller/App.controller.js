@@ -1,11 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
     "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/resource/ResourceModel"
 ], function(
 	Controller,
 	MessageToast,
-	JSONModel
+	JSONModel,
+	ResourceModel
 ) {
 	"use strict";
 
@@ -19,10 +21,21 @@ sap.ui.define([
             };
             var oModel = new JSONModel(oData);
             this.getView().setModel(oModel);
+            // Set i18n model on view
+            var i18nModel = new ResourceModel({
+                bundleName: "sap.ui.demo.walkthrough.i18n.i18n",
+                supportedLocales: [""],
+                fallbackLocale: ""
+            });
+            this.getView().setModel(i18nModel, "i18n");
         },
         onShowHello: function() {
-            // Show a native or vanailla JS alert
-            MessageToast.show("Hello There!");
+            // Read message from i18n model
+            var oBundle = this.getView().getModel("i18n").getResourceBundle();
+            var sRecipient = this.getView().getModel().getProperty("/recipient/name");
+            var sMsg = oBundle.getText("helloMsg", [sRecipient])
+            // Show message
+            MessageToast.show(sMsg);
         }
     })
 });
