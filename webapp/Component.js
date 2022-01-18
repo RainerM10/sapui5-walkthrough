@@ -2,12 +2,14 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/resource/ResourceModel",
-    "./controller/HelloDialog"
+    "./controller/HelloDialog",
+    "sap/ui/Device"
 ], function(
 	UIComponent,
 	JSONModel,
     ResourceModel,
-    HelloDialog
+    HelloDialog,
+    Device
 ) {
 	"use strict";
 
@@ -29,6 +31,10 @@ sap.ui.define([
             this.setModel(oModel);
             // Set Dialog
             this._helloDialog = new HelloDialog(this.getRootControl());
+            // Set device model
+			var oDeviceModel = new JSONModel(Device);
+			oDeviceModel.setDefaultBindingMode("OneWay");
+			this.setModel(oDeviceModel, "device");
             // Create the views bsed on the url/hash
 			this.getRouter().initialize();
         },
