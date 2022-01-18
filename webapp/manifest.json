@@ -59,6 +59,10 @@
               }
             ]
         },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
         "dependencies": {
             "minUI5Version": "1.93",
             "libs": {
